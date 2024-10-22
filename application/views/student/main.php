@@ -169,9 +169,9 @@
                 </div> <!-- /control-group -->
 
                 <div class="control-group">											
-                  <label class="control-label" for="desa">Desa</label>
+                  <label class="control-label" for="kelurahan">Kelurahan</label>
                   <div class="controls">
-                    <input type="text" class="span7" name="desa" id="desa" value="<?= $siswa['desa'];?>" required placeholder="Nama desa tempat tinggal sekarang">
+                    <input type="text" class="span7" name="kelurahan" id="kelurahan" value="<?= $siswa['kelurahan'];?>" required placeholder="Nama kelurahan tempat tinggal sekarang">
                   </div> <!-- /controls -->				
                 </div> <!-- /control-group -->
 

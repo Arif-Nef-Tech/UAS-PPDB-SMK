@@ -854,9 +854,9 @@ class Admin extends CI_Controller {
         }
 
         if (!empty($data->alamat_jalan)) {
-            $alamat = $data->alamat_jalan.' RT '.$data->rt.' RW '.$data->rw.' Desa '.$data->desa.' Kec. '.$data->kecamatan;
+            $alamat = $data->alamat_jalan.' RT '.$data->rt.' RW '.$data->rw.' Kelurahan '.$data->kelurahan.' Kec. '.$data->kecamatan;
         } else {
-            $alamat = 'RT '.$data->rt.' RW '.$data->rw.' Desa '.$data->desa.' Kec. '.$data->kecamatan;
+            $alamat = 'RT '.$data->rt.' RW '.$data->rw.' Kelurahan '.$data->kelurahan.' Kec. '.$data->kecamatan;
         }
         
             
@@ -1163,9 +1163,9 @@ class Admin extends CI_Controller {
         }
 
         if (!empty($data->alamat_jalan)) {
-            $alamat = $data->alamat_jalan.' RT '.$data->rt.' RW '.$data->rw.' Desa '.$data->desa.' Kec. '.$data->kecamatan;
+            $alamat = $data->alamat_jalan.' RT '.$data->rt.' RW '.$data->rw.' Kelurahan '.$data->kelurahan.' Kec. '.$data->kecamatan;
         } else {
-            $alamat = 'RT '.$data->rt.' RW '.$data->rw.' Desa '.$data->desa.' Kec. '.$data->kecamatan;
+            $alamat = 'RT '.$data->rt.' RW '.$data->rw.' Kelurahan '.$data->kelurahan.' Kec. '.$data->kecamatan;
         }
         
             

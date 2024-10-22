@@ -186,9 +186,9 @@
 							</div> <!-- /control-group -->
 
 							<div class="control-group">											
-								<label class="control-label" style="width: 150px" for="desa">Nama Desa <span style="color: red">*</span></label>
+								<label class="control-label" style="width: 150px" for="kelurahan">Nama Kelurahan <span style="color: red">*</span></label>
 								<div class="controls">
-									<input type="text" class="span6" id="desa" name="desa" value="<?php echo $siswa['desa'] ?>" placeholder="Isikan nama desa tempat tinggal" required>
+									<input type="text" class="span6" id="kelurahan" name="kelurahan" value="<?php echo $siswa['kelurahan'] ?>" placeholder="Isikan nama kelurahan tempat tinggal" required>
 								</div> <!-- /controls -->				
 							</div> <!-- /control-group -->
 
