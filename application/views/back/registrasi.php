@@ -112,8 +112,8 @@
                         <div class="card-action">
                             <?php echo $this->pagination->create_links(); ;?>
                             <div style="bottom: 15px; right: 10px;  position: absolute">
-                                <a href="<?= base_url('admin/validasiSemua/'.$this->uri->segment(3));?>" class="btn btn-sm btn-primary vaidasisemua">VaLiDaSi SeMuA</a>
-                                <a href="<?=base_url('admin/downValid');?>" class="btn btn-sm btn-success"> DoWnLoAd DaTa Valid</a>
+                                <a href="<?= base_url('admin/validasiSemua/'.$this->uri->segment(3));?>" class="btn btn-sm btn-primary vaidasisemua">Validasi Semua</a>
+                                <a href="<?=base_url('admin/downValid');?>" class="btn btn-sm btn-success"> Download Data Valid</a>
                             </div>
                         </div>
                     </div>

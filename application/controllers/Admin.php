@@ -1,16 +1,16 @@
-<?php 
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Admin extends CI_Controller
+{
 
-    
+
     public function __construct()
     {
         parent::__construct();
         $this->load->model('AdminModel', 'a');
-        
     }
-    
+
 
     public function index()
     {
@@ -33,15 +33,14 @@ class Admin extends CI_Controller {
         $data['jValid'] = $this->db->get('tbl_registrasi')->num_rows();
 
         $data['stat'] = $this->db->get('tbl_sekolah')->row_array()['bt'];
-        
-        
+
+
         $this->load->view('back/meta', $data);
         $this->load->view('back/header');
         $this->load->view('back/sidebar');
         $this->load->view('back/dashboard');
         $this->load->view('back/footer');
         $this->load->view('back/script');
-        
     }
 
     public function sekolah()
@@ -49,14 +48,13 @@ class Admin extends CI_Controller {
         must_admin();
         $data['sekolah'] = $this->db->get('tbl_sekolah')->row_array();
         $data['user'] = $this->db->get_where('tbl_pengguna', ['xid' => $this->session->userdata('id')])->row();
-        
+
         $this->load->view('back/meta', $data);
         $this->load->view('back/header');
         $this->load->view('back/sidebar');
         $this->load->view('back/sekolah');
         $this->load->view('back/footer');
         $this->load->view('back/script');
-        
     }
 
     public function atur()
@@ -66,14 +64,13 @@ class Admin extends CI_Controller {
         $data['sekolah'] = $this->db->get('tbl_sekolah')->row_array();
         $data['jurusan'] = $this->db->get('tbl_jurusan')->result();
         $data['slide'] = $this->db->get('tbl_slide')->result();
-        
-        $this->load->view('back/meta',$data);
+
+        $this->load->view('back/meta', $data);
         $this->load->view('back/header');
         $this->load->view('back/sidebar');
         $this->load->view('back/atur');
         $this->load->view('back/footer');
         $this->load->view('back/script');
-        
     }
 
     public function informasi()
@@ -83,14 +80,13 @@ class Admin extends CI_Controller {
         $data['sekolah'] = $this->db->get('tbl_sekolah')->row_array();
         $data['jadwal'] = $this->db->get('tbl_jadwal')->result();
         $data['slide'] = $this->db->get('tbl_slide')->result();
-        
-        $this->load->view('back/meta',$data);
+
+        $this->load->view('back/meta', $data);
         $this->load->view('back/header');
         $this->load->view('back/sidebar');
         $this->load->view('back/informasi');
         $this->load->view('back/footer');
         $this->load->view('back/script');
-        
     }
 
     public function registrasi()
@@ -100,9 +96,9 @@ class Admin extends CI_Controller {
         $this->load->library('pagination');
         $data['sekolah'] = $this->db->get('tbl_sekolah')->row_array();
 
-        $config['base_url'] = base_url().'index.php/admin/registrasi/';
+        $config['base_url'] = base_url() . 'index.php/admin/registrasi/';
         $config['total_rows'] = $this->db->get('tbl_registrasi')->num_rows();
-        
+
 
         $config['full_tag_open'] = '<div class="demo"><ul class="pagination pg-primary">';
         $config['full_tag_close'] = '</ul></div>';
@@ -132,7 +128,7 @@ class Admin extends CI_Controller {
         $config['attributes'] = array('class' => 'page-link');
 
         $data['start'] = $this->uri->segment(3);
-        
+
         if (isset($_POST['cari'])) {
             # code...
             $this->db->or_like('nama', $this->input->post('cari'));
@@ -142,16 +138,15 @@ class Admin extends CI_Controller {
             $config['per_page'] = 10;
             $data['registrasi'] = $this->db->get('tbl_registrasi', $config['per_page'], $data['start']);
         }
-        
+
         $this->pagination->initialize($config);
-        
-        $this->load->view('back/meta',$data);
+
+        $this->load->view('back/meta', $data);
         $this->load->view('back/header');
         $this->load->view('back/sidebar');
         $this->load->view('back/registrasi');
         $this->load->view('back/footer');
         $this->load->view('back/script');
-        
     }
 
     public function seleksi()
@@ -160,19 +155,18 @@ class Admin extends CI_Controller {
         $data['user'] = $this->db->get_where('tbl_pengguna', ['xid' => $this->session->userdata('id')])->row();
         $data['sekolah'] = $this->db->get('tbl_sekolah')->row_array();
         $data['semua'] = $this->db->get('tbl_registrasi')->num_rows();
-        $data['lengkap'] = $this->db->get_where('tbl_registrasi',['benar' => 'on'])->num_rows();
-        $data['valid'] = $this->db->get_where('tbl_registrasi',['valid' => '1'])->num_rows();
-        $data['diterima'] = $this->db->get_where('tbl_registrasi',['seleksi' => '1'])->num_rows();
+        $data['lengkap'] = $this->db->get_where('tbl_registrasi', ['benar' => 'on'])->num_rows();
+        $data['valid'] = $this->db->get_where('tbl_registrasi', ['valid' => '1'])->num_rows();
+        $data['diterima'] = $this->db->get_where('tbl_registrasi', ['seleksi' => '1'])->num_rows();
         $data['status'] = $this->db->get('tbl_sekolah')->row()->bt;
-        
-        
+
+
         $this->load->view('back/meta', $data);
         $this->load->view('back/header');
         $this->load->view('back/sidebar');
         $this->load->view('back/seleksi');
         $this->load->view('back/footer');
         $this->load->view('back/script');
-        
     }
 
     public function daftarulang()
@@ -182,12 +176,12 @@ class Admin extends CI_Controller {
         $this->load->library('pagination');
         $data['sekolah'] = $this->db->get('tbl_sekolah')->row_array();
 
-        $config['base_url'] = base_url().'index.php/admin/registrasi/';
+        $config['base_url'] = base_url() . 'index.php/admin/registrasi/';
 
         $this->db->where_in('seleksi', '1');
         $this->db->where_not_in('jur', '');
         $config['total_rows'] = $this->db->get('tbl_registrasi')->num_rows();
-        
+
 
         $config['full_tag_open'] = '<div class="demo"><ul class="pagination pg-primary">';
         $config['full_tag_close'] = '</ul></div>';
@@ -217,7 +211,7 @@ class Admin extends CI_Controller {
         $config['attributes'] = array('class' => 'page-link');
 
         $data['start'] = $this->uri->segment(3);
-        
+
         if (isset($_POST['cari'])) {
             # code...
             $this->db->or_like('nama', $this->input->post('cari'));
@@ -231,16 +225,15 @@ class Admin extends CI_Controller {
             $this->db->where_not_in('jur', '');
             $data['registrasi'] = $this->db->get('tbl_registrasi', $config['per_page'], $data['start']);
         }
-        
+
         $this->pagination->initialize($config);
-        
-        $this->load->view('back/meta',$data);
+
+        $this->load->view('back/meta', $data);
         $this->load->view('back/header');
         $this->load->view('back/sidebar');
         $this->load->view('back/daftarulang');
         $this->load->view('back/footer');
         $this->load->view('back/script');
-        
     }
 
 
@@ -248,15 +241,16 @@ class Admin extends CI_Controller {
      * Kumpulan fungsi tambah data
      */
 
-    function tJadwal() {
+    function tJadwal()
+    {
         must_admin();
 
         $data = [
-            
+
             'kegiatan' => $this->input->post('kegiatan', true),
             'dibuka' => $this->input->post('dibuka', true),
             'ditutup' => $this->input->post('ditutup', true),
-            
+
         ];
 
         $simpan = $this->a->tambah('tbl_jadwal', $data);
@@ -264,15 +258,16 @@ class Admin extends CI_Controller {
         if ($simpan) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil ditambah');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal ditambah');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         }
     }
 
-    function tSlide() {
+    function tSlide()
+    {
         must_admin();
 
         $upload = $this->a->upSlide();
@@ -280,23 +275,24 @@ class Admin extends CI_Controller {
         $data = [
             'judul' => $this->input->post('judul', true),
             'text' => $this->input->post('text'),
-            'gambar' => $upload,        
+            'gambar' => $upload,
         ];
 
         $simpan = $this->a->tambah('tbl_slide', $data);
-        
+
         if ($simpan && $upload != 'error') {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil ditambah');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'warning');
             $this->session->set_flashdata('pesan', 'Data ditambahkan tanpa gambar');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         }
     }
 
-    function tJurusan() {
+    function tJurusan()
+    {
         must_admin();
         $namaJurusan = $this->input->post('namaJurusan', true);
         $data = [
@@ -308,11 +304,11 @@ class Admin extends CI_Controller {
         if ($simpan) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil ditambah');
-            redirect('admin/atur','refresh');
+            redirect('admin/atur', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal ditambah');
-            redirect('admin/atur','refresh');
+            redirect('admin/atur', 'refresh');
         }
     }
 
@@ -322,7 +318,8 @@ class Admin extends CI_Controller {
      * Kumpulan fungsi update data
      */
 
-     function resValid($id, $page = null) {
+    function resValid($id, $page = null)
+    {
         echo $page;
         $object = ['valid' => '0'];
         $this->db->where('id', $id);
@@ -331,106 +328,101 @@ class Admin extends CI_Controller {
         if ($ubah) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil direset');
-            redirect('index.php/admin/registrasi/'.$page,'refresh');
+            redirect('index.php/admin/registrasi/' . $page, 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Tidak ada data direset');
-            redirect('index.php/admin/registrasi/'.$page,'refresh');
+            redirect('index.php/admin/registrasi/' . $page, 'refresh');
         }
-        
-     }
+    }
 
-     function us() {
+    function us()
+    {
         must_admin();
-         $data = [
+        $data = [
             'nama_sekolah'  => $this->input->post('nama_sekolah', true),
             'alamat'        => $this->input->post('alamat', true),
             'kota'          => $this->input->post('kota', true),
             'provinsi'      => $this->input->post('provinsi', true),
             'email_sekolah' => $this->input->post('email_sekolah', true),
             'tlp_sekolah'   => $this->input->post('tlp_sekolah', true),
-         ];
+        ];
 
-         $simpan = $this->a->us($data);
+        $simpan = $this->a->us($data);
 
-         if ($simpan) {
-             $this->session->set_flashdata('tipe', 'success');
-             $this->session->set_flashdata('pesan', 'Data berhasil disimpan');
-             redirect('admin/sekolah','refresh');
-             
-         } else {
+        if ($simpan) {
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Data berhasil disimpan');
+            redirect('admin/sekolah', 'refresh');
+        } else {
             $this->session->set_flashdata('tipe', 'warning');
             $this->session->set_flashdata('pesan', 'Data gagal disimpan');
-            redirect('admin/sekolah','refresh');
-         }
-         
-     }
+            redirect('admin/sekolah', 'refresh');
+        }
+    }
 
-     function stat() 
-     {
+    function stat()
+    {
         must_admin();
-         $data = [
+        $data = [
             'bt'         => $this->input->post('bt', true),
             'kirim_mail' => $this->input->post('kirim_mail', true),
             'pass_mail'  => base64_encode($this->input->post('pass_mail', true)),
             'smtp_host' => $this->input->post('smtp_host', true),
             'smtp_port' => $this->input->post('smtp_port', true),
 
-         ];
+        ];
 
-         $simpan = $this->a->us($data);
+        $simpan = $this->a->us($data);
 
-         if ($simpan) {
-             $this->session->set_flashdata('tipe', 'success');
-             $this->session->set_flashdata('pesan', 'Data berhasil disimpan');
-             redirect('admin/atur','refresh');
-             
-         } else {
+        if ($simpan) {
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Data berhasil disimpan');
+            redirect('admin/atur', 'refresh');
+        } else {
             $this->session->set_flashdata('tipe', 'warning');
             $this->session->set_flashdata('pesan', 'Data gagal disimpan');
-            redirect('admin/atur','refresh');
-         }
+            redirect('admin/atur', 'refresh');
+        }
+    }
 
-     }
-
-     function uppan()
-     {
+    function uppan()
+    {
         must_admin();
         $upload = $this->a->uppan();
-        
-        if ($upload == 'sukses') {
-        $this->session->set_flashdata('tipe', 'success');
-        $this->session->set_flashdata('pesan', 'Panduan berhasil disimpan');
-        redirect('admin/atur','refresh');
-        } else {
-        $this->session->set_flashdata('tipe', 'warning');
-        $this->session->set_flashdata('pesan', 'Panduan gagal disimpan, '.$this->upload->display_errors());
-        redirect('admin/atur','refresh');
-        }
-         
-     }
 
-     function upLogo()
-     {
+        if ($upload == 'sukses') {
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Panduan berhasil disimpan');
+            redirect('admin/atur', 'refresh');
+        } else {
+            $this->session->set_flashdata('tipe', 'warning');
+            $this->session->set_flashdata('pesan', 'Panduan gagal disimpan, ' . $this->upload->display_errors());
+            redirect('admin/atur', 'refresh');
+        }
+    }
+
+    function upLogo()
+    {
         must_admin();
         $upload = $this->a->upLogo();
-        
-        if ($upload == 'sukses') {
-        $this->session->set_flashdata('tipe', 'success');
-        $this->session->set_flashdata('pesan', 'Logo berhasil disimpan');
-        redirect('admin/sekolah','refresh');
-        } else {
-        $this->session->set_flashdata('tipe', 'warning');
-        $this->session->set_flashdata('pesan', 'Logo gagal disimpan, '.$this->upload->display_errors());
-        redirect('admin/sekolah','refresh');
-        }
-         
-     }
 
-     function uJadwal() {
+        if ($upload == 'sukses') {
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Logo berhasil disimpan');
+            redirect('admin/sekolah', 'refresh');
+        } else {
+            $this->session->set_flashdata('tipe', 'warning');
+            $this->session->set_flashdata('pesan', 'Logo gagal disimpan, ' . $this->upload->display_errors());
+            redirect('admin/sekolah', 'refresh');
+        }
+    }
+
+    function uJadwal()
+    {
         must_admin();
         $id = $this->input->post('id', true);
-         
+
         $data = [
             'kegiatan' => $this->input->post('kegiatan', true),
             'dibuka' => $this->input->post('dibuka', true),
@@ -442,19 +434,19 @@ class Admin extends CI_Controller {
         if ($simpan) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil diubah');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal diubah');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         }
-        
-     }
+    }
 
-     function uJurusan() {
+    function uJurusan()
+    {
         must_admin();
         $id = $this->input->post('id', true);
-         
+
         $data = [
             'namaJurusan' => $this->input->post('namaJurusan', true),
         ];
@@ -464,19 +456,19 @@ class Admin extends CI_Controller {
         if ($simpan) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil diubah');
-            redirect('admin/atur','refresh');
+            redirect('admin/atur', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal diubah');
-            redirect('admin/atur','refresh');
+            redirect('admin/atur', 'refresh');
         }
-        
-     }
+    }
 
-     function uData() {
+    function uData()
+    {
         must_admin();
         $id = $this->input->post('id', true);
-         
+
         $data = [
             'nisn' => $this->input->post('nisn', true),
         ];
@@ -486,16 +478,16 @@ class Admin extends CI_Controller {
         if ($simpan) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil diubah');
-            redirect('admin/registrasi','refresh');
+            redirect('admin/registrasi', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal diubah');
-            redirect('admin/registrasi','refresh');
+            redirect('admin/registrasi', 'refresh');
         }
-        
-     }
+    }
 
-     function uSlide() {
+    function uSlide()
+    {
         must_admin();
         $id = $this->input->post('id', true);
         $upload = $this->a->upSlide();
@@ -513,55 +505,54 @@ class Admin extends CI_Controller {
                 'text' => $this->input->post('text', true),
             ];
         }
-        
+
         $simpan = $this->a->uBah('tbl_slide', $data, $id);
 
         if ($simpan) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil diubah');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal diubah');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         }
-        
-     }
+    }
 
-     function gUbahJad() {
-         $this->db->where('id', $this->input->post('id'));
-         $d = array();
-         $data = $this->db->get('tbl_jadwal')->result_array();
-         array_push($d, array($data, ['token' => $this->security->get_csrf_hash()]));
-         echo json_encode($d);
-         
-     }
+    function gUbahJad()
+    {
+        $this->db->where('id', $this->input->post('id'));
+        $d = array();
+        $data = $this->db->get('tbl_jadwal')->result_array();
+        array_push($d, array($data, ['token' => $this->security->get_csrf_hash()]));
+        echo json_encode($d);
+    }
 
-     function gUbahSld() {
+    function gUbahSld()
+    {
         $this->db->where('id', $this->input->post('id'));
         $d = array();
         $data = $this->db->get('tbl_slide')->result_array();
         array_push($d, array($data, ['token' => $this->security->get_csrf_hash()]));
         echo json_encode($d);
-        
     }
 
-    function gUbahJur() {
+    function gUbahJur()
+    {
         $this->db->where('id', $this->input->post('id'));
         $d = array();
         $data = $this->db->get('tbl_jurusan')->result_array();
         array_push($d, array($data, ['token' => $this->security->get_csrf_hash()]));
         echo json_encode($d);
-        
     }
 
-    function gUbahData() {
+    function gUbahData()
+    {
         $this->db->where('id', $this->input->post('id'));
         $d = array();
         $data = $this->db->get('tbl_registrasi')->result_array();
         array_push($d, array($data, ['token' => $this->security->get_csrf_hash()]));
         echo json_encode($d);
-        
     }
 
     function validAll()
@@ -571,48 +562,49 @@ class Admin extends CI_Controller {
         if ($id) {
             # code...
             $d = array();
-            foreach ($id as $i ) {
+            foreach ($id as $i) {
                 array_push($d, array('id' => $i, 'valid' => '1'));
             }
-    
+
             $simpan = $this->db->update_batch('tbl_registrasi', $d, 'id');
             if ($simpan) {
                 $this->session->set_flashdata('tipe', 'success');
                 $this->session->set_flashdata('pesan', 'Data berhasil divalidasi');
-                redirect('index.php/admin/registrasi/'.$page,'refresh');
+                redirect('index.php/admin/registrasi/' . $page, 'refresh');
             } else {
                 $this->session->set_flashdata('tipe', 'danger');
                 $this->session->set_flashdata('pesan', 'Tidak ada data divalidasi');
-                redirect('index.php/admin/registrasi/'.$page,'refresh');
+                redirect('index.php/admin/registrasi/' . $page, 'refresh');
             }
         } else {
             # code...
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Tidak ada data divalidasi');
-            redirect('index.php/admin/registrasi/'.$page,'refresh');
+            redirect('index.php/admin/registrasi/' . $page, 'refresh');
         }
     }
 
-    function validasiSemua($page = null) {
+    function validasiSemua($page = null)
+    {
         must_admin();
         $object = [
             'valid' => '1',
         ];
         $ubah = $this->db->update('tbl_registrasi', $object);
-        
+
         if ($ubah) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil divalidasi');
-            redirect('index.php/admin/registrasi/'.$page,'refresh');
+            redirect('index.php/admin/registrasi/' . $page, 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Tidak ada data divalidasi');
-            redirect('index.php/admin/registrasi/'.$page,'refresh');
+            redirect('index.php/admin/registrasi/' . $page, 'refresh');
         }
-        
     }
 
-    function resetseleksi() {
+    function resetseleksi()
+    {
         must_admin();
         $data = [
             'seleksi'   => '',
@@ -624,132 +616,135 @@ class Admin extends CI_Controller {
         if ($sukses) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil direset');
-            redirect('admin/seleksi','refresh');
+            redirect('admin/seleksi', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'warning');
             $this->session->set_flashdata('pesan', 'Tidak ada data direset');
-            redirect('admin/seleksi','refresh');
+            redirect('admin/seleksi', 'refresh');
         }
-        
-        
     }
 
-     /**
-      * Kumpulan gungsi hapus
-      */
-    
-    function hapus($table, $id) {
+    /**
+     * Kumpulan gungsi hapus
+     */
+
+    function hapus($table, $id)
+    {
         must_admin();
-        $hapus = $this->a->hapus('tbl_'.$table,$id);
+        $hapus = $this->a->hapus('tbl_' . $table, $id);
         if ($hapus) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil dihapus');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal dihapus');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         }
     }
 
-    function hapusx($table, $id) {
+    function hapusx($table, $id)
+    {
         must_admin();
-        $hapus = $this->a->hapus('tbl_'.$table,$id);
+        $hapus = $this->a->hapus('tbl_' . $table, $id);
         if ($hapus) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil dihapus');
-            redirect('admin/atur','refresh');
+            redirect('admin/atur', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal dihapus');
-            redirect('admin/atur','refresh');
+            redirect('admin/atur', 'refresh');
         }
     }
 
-    function hapusr($table, $id) {
+    function hapusr($table, $id)
+    {
         must_admin();
-        $hapus = $this->a->hapus('tbl_'.$table,$id);
+        $hapus = $this->a->hapus('tbl_' . $table, $id);
         if ($hapus) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil dihapus');
-            redirect('admin/registrasi','refresh');
+            redirect('admin/registrasi', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal dihapus');
-            redirect('admin/registrasi','refresh');
+            redirect('admin/registrasi', 'refresh');
         }
     }
 
-    function kosong($table) {
+    function kosong($table)
+    {
         must_admin();
-        $hapus = $this->a->kosong('tbl_'.$table);
+        $hapus = $this->a->kosong('tbl_' . $table);
         if ($hapus) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil dihapus');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal dihapus');
-            redirect('admin/informasi','refresh');
+            redirect('admin/informasi', 'refresh');
         }
     }
 
-    function kosongx($table) {
+    function kosongx($table)
+    {
         must_admin();
-        $hapus = $this->a->kosong('tbl_'.$table);
+        $hapus = $this->a->kosong('tbl_' . $table);
         if ($hapus) {
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil dihapus');
-            redirect('admin/atur','refresh');
+            redirect('admin/atur', 'refresh');
         } else {
             $this->session->set_flashdata('tipe', 'danger');
             $this->session->set_flashdata('pesan', 'Data gagal dihapus');
-            redirect('admin/atur','refresh');
+            redirect('admin/atur', 'refresh');
         }
     }
 
 
 
-    function downValid() 
+    function downValid()
     {
 
         // Load plugin PHPExcel nya
-        include APPPATH.'third_party/PHPExcel/PHPExcel.php';
-        
+        include APPPATH . 'third_party/PHPExcel/PHPExcel.php';
+
         // Panggil class PHPExcel nya
         $excel = new PHPExcel();
         // Settingan awal fil excel
         $excel->getProperties()->setCreator('Yuwandianto')
-        ->setLastModifiedBy('Yuwandianto')
-        ->setTitle("Data-pendaftar")
-        ->setSubject("Zonasi")
-        ->setDescription("Laporan Pendaftaran ")
-        ->setKeywords("Jalur Zonasi");
+            ->setLastModifiedBy('Yuwandianto')
+            ->setTitle("Data-pendaftar")
+            ->setSubject("Zonasi")
+            ->setDescription("Laporan Pendaftaran ")
+            ->setKeywords("Jalur Zonasi");
         // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
         $style_col = array(
-        'font' => array('bold' => true), // Set font nya jadi bold
-        'alignment' => array(
-            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
-        ),
-        'borders' => array(
-            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
-        ),
+            'font' => array('bold' => true), // Set font nya jadi bold
+            'alignment' => array(
+                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            ),
+            'borders' => array(
+                'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+            ),
         );
         // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
         $style_row = array(
-        'alignment' => array(
-            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
-        ),
-        'borders' => array(
-            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
-        )
+            'alignment' => array(
+                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            ),
+            'borders' => array(
+                'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+            )
         );
 
 
@@ -810,109 +805,109 @@ class Admin extends CI_Controller {
         $excel->getActiveSheet()->getStyle('U3')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('V3')->applyFromArray($style_col);
 
-        
+
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
         $siswa = $this->db->get_where('tbl_registrasi', ['valid' => '1'])->result();
         $no = 1; // Untuk penomoran tabel, di awal set dengan 1
         $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
-        foreach($siswa as $data){ // Lakukan looping pada variabel siswa
+        foreach ($siswa as $data) { // Lakukan looping pada variabel siswa
 
-        if ($data->jk == '1') {
-            $jk = 'L';
-        } elseif ($data->jk == '2') {
-            $jk = 'P';
-        }
+            if ($data->jk == '1') {
+                $jk = 'L';
+            } elseif ($data->jk == '2') {
+                $jk = 'P';
+            }
 
-        if (!empty($data->foto)) {
-            $foto = 'upload';
-        } else {
-            $foto = 'belum';
-        }
+            if (!empty($data->foto)) {
+                $foto = 'upload';
+            } else {
+                $foto = 'belum';
+            }
 
-        if (!empty($data->bukti_kk)) {
-            $kk = 'upload';
-        } else {
-            $kk = 'belum';
-        }
+            if (!empty($data->bukti_kk)) {
+                $kk = 'upload';
+            } else {
+                $kk = 'belum';
+            }
 
-        if (!empty($data->bukti_raport)) {
-            $raport = 'upload';
-        } else {
-            $raport = 'belum';
-        }
+            if (!empty($data->bukti_raport)) {
+                $raport = 'upload';
+            } else {
+                $raport = 'belum';
+            }
 
-        if (!empty($data->bukti_prestasi)) {
-            $prestasi = 'upload';
-        } else {
-            $prestasi = 'belum';
-        }
+            if (!empty($data->bukti_prestasi)) {
+                $prestasi = 'upload';
+            } else {
+                $prestasi = 'belum';
+            }
 
-        if ($data->tingkat_prestasi !='' && $data->juara_prestasi !='' && $data->bidang_prestasi !='' && $data->nama_prestasi !='') {
-            $non = 'Juara '.$data->juara_prestasi.' tingkat '.$data->tingkat_prestasi.' '.$data->nama_prestasi;
-        } else {
-            $non = '-';
-        }
+            if ($data->tingkat_prestasi != '' && $data->juara_prestasi != '' && $data->bidang_prestasi != '' && $data->nama_prestasi != '') {
+                $non = 'Juara ' . $data->juara_prestasi . ' tingkat ' . $data->tingkat_prestasi . ' ' . $data->nama_prestasi;
+            } else {
+                $non = '-';
+            }
 
-        if (!empty($data->alamat_jalan)) {
-            $alamat = $data->alamat_jalan.' RT '.$data->rt.' RW '.$data->rw.' Kelurahan '.$data->kelurahan.' Kec. '.$data->kecamatan;
-        } else {
-            $alamat = 'RT '.$data->rt.' RW '.$data->rw.' Kelurahan '.$data->kelurahan.' Kec. '.$data->kecamatan;
-        }
-        
-            
-
-        $excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
-        $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->nomor_daftar);
-        $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->nama);
-        $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->nisn);
-        $excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $jk);
-        $excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->tempat_lahir);
-        $excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->tgl_lahir);
-        $excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $data->bln_lahir);
-        $excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $data->thn_lahir);
-        $excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $data->agama);
-        $excel->setActiveSheetIndex(0)->setCellValue('K'.$numrow, $alamat);
-        $excel->setActiveSheetIndex(0)->setCellValue('L'.$numrow, $data->sekolah_asal);
-        $excel->setActiveSheetIndex(0)->setCellValue('M'.$numrow, $data->tahun_lulus);
-        $excel->setActiveSheetIndex(0)->setCellValue('N'.$numrow, $data->nomor_hp);
-        $excel->setActiveSheetIndex(0)->setCellValue('O'.$numrow, $data->sum);
-        $excel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, $non);
-        $excel->setActiveSheetIndex(0)->setCellValue('Q'.$numrow, $foto);
-        $excel->setActiveSheetIndex(0)->setCellValue('R'.$numrow, $kk);
-        $excel->setActiveSheetIndex(0)->setCellValue('S'.$numrow, $raport);
-        $excel->setActiveSheetIndex(0)->setCellValue('T'.$numrow, $prestasi);
-        $excel->setActiveSheetIndex(0)->setCellValue('U'.$numrow, $data->jurusan1);
-        $excel->setActiveSheetIndex(0)->setCellValue('V'.$numrow, $data->jurusan2);
+            if (!empty($data->alamat_jalan)) {
+                $alamat = $data->alamat_jalan . ' RT ' . $data->rt . ' RW ' . $data->rw . ' Kelurahan ' . $data->kelurahan . ' Kec. ' . $data->kecamatan;
+            } else {
+                $alamat = 'RT ' . $data->rt . ' RW ' . $data->rw . ' Kelurahan ' . $data->kelurahan . ' Kec. ' . $data->kecamatan;
+            }
 
 
 
-        // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
-        $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('H'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('I'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('J'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('K'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('L'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('M'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('N'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('O'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('P'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('Q'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('R'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('S'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('T'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('U'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('V'.$numrow)->applyFromArray($style_row);
+            $excel->setActiveSheetIndex(0)->setCellValue('A' . $numrow, $no);
+            $excel->setActiveSheetIndex(0)->setCellValue('B' . $numrow, $data->nomor_daftar);
+            $excel->setActiveSheetIndex(0)->setCellValue('C' . $numrow, $data->nama);
+            $excel->setActiveSheetIndex(0)->setCellValue('D' . $numrow, $data->nisn);
+            $excel->setActiveSheetIndex(0)->setCellValue('E' . $numrow, $jk);
+            $excel->setActiveSheetIndex(0)->setCellValue('F' . $numrow, $data->tempat_lahir);
+            $excel->setActiveSheetIndex(0)->setCellValue('G' . $numrow, $data->tgl_lahir);
+            $excel->setActiveSheetIndex(0)->setCellValue('H' . $numrow, $data->bln_lahir);
+            $excel->setActiveSheetIndex(0)->setCellValue('I' . $numrow, $data->thn_lahir);
+            $excel->setActiveSheetIndex(0)->setCellValue('J' . $numrow, $data->agama);
+            $excel->setActiveSheetIndex(0)->setCellValue('K' . $numrow, $alamat);
+            $excel->setActiveSheetIndex(0)->setCellValue('L' . $numrow, $data->sekolah_asal);
+            $excel->setActiveSheetIndex(0)->setCellValue('M' . $numrow, $data->tahun_lulus);
+            $excel->setActiveSheetIndex(0)->setCellValue('N' . $numrow, $data->nomor_hp);
+            $excel->setActiveSheetIndex(0)->setCellValue('O' . $numrow, $data->sum);
+            $excel->setActiveSheetIndex(0)->setCellValue('P' . $numrow, $non);
+            $excel->setActiveSheetIndex(0)->setCellValue('Q' . $numrow, $foto);
+            $excel->setActiveSheetIndex(0)->setCellValue('R' . $numrow, $kk);
+            $excel->setActiveSheetIndex(0)->setCellValue('S' . $numrow, $raport);
+            $excel->setActiveSheetIndex(0)->setCellValue('T' . $numrow, $prestasi);
+            $excel->setActiveSheetIndex(0)->setCellValue('U' . $numrow, $data->jurusan1);
+            $excel->setActiveSheetIndex(0)->setCellValue('V' . $numrow, $data->jurusan2);
 
 
-        $no++; // Tambah 1 setiap kali looping
-        $numrow++; // Tambah 1 setiap kali looping
+
+            // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
+            $excel->getActiveSheet()->getStyle('A' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('B' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('C' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('D' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('E' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('G' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('H' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('I' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('J' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('K' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('L' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('M' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('N' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('O' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('P' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('Q' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('R' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('S' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('T' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('U' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('V' . $numrow)->applyFromArray($style_row);
+
+
+            $no++; // Tambah 1 setiap kali looping
+            $numrow++; // Tambah 1 setiap kali looping
         }
         // Set width kolom
         $excel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
@@ -938,7 +933,7 @@ class Admin extends CI_Controller {
         $excel->getActiveSheet()->getColumnDimension('U')->setWidth(15);
         $excel->getActiveSheet()->getColumnDimension('V')->setWidth(15);
 
-        
+
         // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
         $excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
         // Set orientasi kertas jadi LANDSCAPE
@@ -954,29 +949,30 @@ class Admin extends CI_Controller {
         $write->save('php://output');
     }
 
-    function importhasilseleksi() {
+    function importhasilseleksi()
+    {
         must_admin();
 
         $import = $this->a->importhasilseleksi();
 
         if ($import == 'success') {
-            include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+            include APPPATH . 'third_party/PHPExcel/PHPExcel.php';
             $excelreader = new PHPExcel_Reader_Excel2007();
             $loadexcel   = $excelreader->load('./uploads/hasil/data_import.xlsx');
-            $sheet       = $loadexcel->getActiveSheet()->toArray(null, true, true , true);
+            $sheet       = $loadexcel->getActiveSheet()->toArray(null, true, true, true);
             $data        = array();
             $log         = array();
             $numrow      = 1;
-            foreach($sheet as $row){
+            foreach ($sheet as $row) {
 
-                if($numrow > 1){
+                if ($numrow > 1) {
                     array_push($data, array(
                         'nisn'    => $row['B'],
                         'jur'     => $row['D'],
                         'seleksi' => '1'
                     ));
                 }
-                $numrow++; 
+                $numrow++;
             }
 
             $sukses = $this->db->update_batch('tbl_registrasi', $data, 'nisn');
@@ -985,24 +981,22 @@ class Admin extends CI_Controller {
                 unlink('./uploads/hasil/data_import.xlsx');
                 $this->session->set_flashdata('tipe', 'success');
                 $this->session->set_flashdata('pesan', 'Data berhasil diimport');
-                redirect('admin/seleksi','refresh');
-
+                redirect('admin/seleksi', 'refresh');
             } else {
                 $this->session->set_flashdata('tipe', 'warning');
                 $this->session->set_flashdata('pesan', 'Data gagal diimport');
-                redirect('admin/seleksi','refresh');
+                redirect('admin/seleksi', 'refresh');
             }
-
         } else {
             $this->session->set_flashdata('tipe', 'warning');
             $this->session->set_flashdata('pesan', $this->upload->display_errors());
-            redirect('admin/seleksi','refresh');
+            redirect('admin/seleksi', 'refresh');
         }
-
     }
 
 
-    function backupdb() {
+    function backupdb()
+    {
         must_admin();
         // Load the DB utility class
         $this->load->dbutil();
@@ -1019,46 +1013,46 @@ class Admin extends CI_Controller {
         force_download('mybackup.zip', $backup);
     }
 
-    function downDU() 
+    function downDU()
     {
 
         // Load plugin PHPExcel nya
-        include APPPATH.'third_party/PHPExcel/PHPExcel.php';
-        
+        include APPPATH . 'third_party/PHPExcel/PHPExcel.php';
+
         // Panggil class PHPExcel nya
         $excel = new PHPExcel();
         // Settingan awal fil excel
         $excel->getProperties()->setCreator('Yuwandianto')
-        ->setLastModifiedBy('Yuwandianto')
-        ->setTitle("Data-pendaftar")
-        ->setSubject("Zonasi")
-        ->setDescription("Laporan Pendaftaran ")
-        ->setKeywords("Jalur Zonasi");
+            ->setLastModifiedBy('Yuwandianto')
+            ->setTitle("Data-pendaftar")
+            ->setSubject("Zonasi")
+            ->setDescription("Laporan Pendaftaran ")
+            ->setKeywords("Jalur Zonasi");
         // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
         $style_col = array(
-        'font' => array('bold' => true), // Set font nya jadi bold
-        'alignment' => array(
-            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
-        ),
-        'borders' => array(
-            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
-        ),
+            'font' => array('bold' => true), // Set font nya jadi bold
+            'alignment' => array(
+                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            ),
+            'borders' => array(
+                'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+            ),
         );
         // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
         $style_row = array(
-        'alignment' => array(
-            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
-        ),
-        'borders' => array(
-            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
-        )
+            'alignment' => array(
+                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            ),
+            'borders' => array(
+                'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+                'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+            )
         );
 
 
@@ -1119,109 +1113,109 @@ class Admin extends CI_Controller {
         $excel->getActiveSheet()->getStyle('U3')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('V3')->applyFromArray($style_col);
 
-        
+
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
         $siswa = $this->db->get_where('tbl_registrasi', ['seleksi' => '1'])->result();
         $no = 1; // Untuk penomoran tabel, di awal set dengan 1
         $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
-        foreach($siswa as $data){ // Lakukan looping pada variabel siswa
+        foreach ($siswa as $data) { // Lakukan looping pada variabel siswa
 
-        if ($data->jk == '1') {
-            $jk = 'L';
-        } elseif ($data->jk == '2') {
-            $jk = 'P';
-        }
+            if ($data->jk == '1') {
+                $jk = 'L';
+            } elseif ($data->jk == '2') {
+                $jk = 'P';
+            }
 
-        if (!empty($data->foto)) {
-            $foto = 'upload';
-        } else {
-            $foto = 'belum';
-        }
+            if (!empty($data->foto)) {
+                $foto = 'upload';
+            } else {
+                $foto = 'belum';
+            }
 
-        if (!empty($data->bukti_kk)) {
-            $kk = 'upload';
-        } else {
-            $kk = 'belum';
-        }
+            if (!empty($data->bukti_kk)) {
+                $kk = 'upload';
+            } else {
+                $kk = 'belum';
+            }
 
-        if (!empty($data->bukti_raport)) {
-            $raport = 'upload';
-        } else {
-            $raport = 'belum';
-        }
+            if (!empty($data->bukti_raport)) {
+                $raport = 'upload';
+            } else {
+                $raport = 'belum';
+            }
 
-        if (!empty($data->bukti_prestasi)) {
-            $prestasi = 'upload';
-        } else {
-            $prestasi = 'belum';
-        }
+            if (!empty($data->bukti_prestasi)) {
+                $prestasi = 'upload';
+            } else {
+                $prestasi = 'belum';
+            }
 
-        if ($data->tingkat_prestasi !='' && $data->juara_prestasi !='' && $data->bidang_prestasi !='' && $data->nama_prestasi !='') {
-            $non = 'Juara '.$data->juara_prestasi.' tingkat '.$data->tingkat_prestasi.' '.$data->nama_prestasi;
-        } else {
-            $non = '-';
-        }
+            if ($data->tingkat_prestasi != '' && $data->juara_prestasi != '' && $data->bidang_prestasi != '' && $data->nama_prestasi != '') {
+                $non = 'Juara ' . $data->juara_prestasi . ' tingkat ' . $data->tingkat_prestasi . ' ' . $data->nama_prestasi;
+            } else {
+                $non = '-';
+            }
 
-        if (!empty($data->alamat_jalan)) {
-            $alamat = $data->alamat_jalan.' RT '.$data->rt.' RW '.$data->rw.' Kelurahan '.$data->kelurahan.' Kec. '.$data->kecamatan;
-        } else {
-            $alamat = 'RT '.$data->rt.' RW '.$data->rw.' Kelurahan '.$data->kelurahan.' Kec. '.$data->kecamatan;
-        }
-        
-            
-
-        $excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
-        $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->nomor_daftar);
-        $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->nama);
-        $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->nisn);
-        $excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $jk);
-        $excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->tempat_lahir);
-        $excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->tgl_lahir);
-        $excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $data->bln_lahir);
-        $excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $data->thn_lahir);
-        $excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $data->agama);
-        $excel->setActiveSheetIndex(0)->setCellValue('K'.$numrow, $alamat);
-        $excel->setActiveSheetIndex(0)->setCellValue('L'.$numrow, $data->sekolah_asal);
-        $excel->setActiveSheetIndex(0)->setCellValue('M'.$numrow, $data->tahun_lulus);
-        $excel->setActiveSheetIndex(0)->setCellValue('N'.$numrow, $data->nomor_hp);
-        $excel->setActiveSheetIndex(0)->setCellValue('O'.$numrow, $data->sum);
-        $excel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, $non);
-        $excel->setActiveSheetIndex(0)->setCellValue('Q'.$numrow, $foto);
-        $excel->setActiveSheetIndex(0)->setCellValue('R'.$numrow, $kk);
-        $excel->setActiveSheetIndex(0)->setCellValue('S'.$numrow, $raport);
-        $excel->setActiveSheetIndex(0)->setCellValue('T'.$numrow, $prestasi);
-        $excel->setActiveSheetIndex(0)->setCellValue('U'.$numrow, $data->jurusan1);
-        $excel->setActiveSheetIndex(0)->setCellValue('V'.$numrow, $data->jurusan2);
+            if (!empty($data->alamat_jalan)) {
+                $alamat = $data->alamat_jalan . ' RT ' . $data->rt . ' RW ' . $data->rw . ' Kelurahan ' . $data->kelurahan . ' Kec. ' . $data->kecamatan;
+            } else {
+                $alamat = 'RT ' . $data->rt . ' RW ' . $data->rw . ' Kelurahan ' . $data->kelurahan . ' Kec. ' . $data->kecamatan;
+            }
 
 
 
-        // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
-        $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('H'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('I'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('J'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('K'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('L'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('M'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('N'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('O'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('P'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('Q'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('R'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('S'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('T'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('U'.$numrow)->applyFromArray($style_row);
-        $excel->getActiveSheet()->getStyle('V'.$numrow)->applyFromArray($style_row);
+            $excel->setActiveSheetIndex(0)->setCellValue('A' . $numrow, $no);
+            $excel->setActiveSheetIndex(0)->setCellValue('B' . $numrow, $data->nomor_daftar);
+            $excel->setActiveSheetIndex(0)->setCellValue('C' . $numrow, $data->nama);
+            $excel->setActiveSheetIndex(0)->setCellValue('D' . $numrow, $data->nisn);
+            $excel->setActiveSheetIndex(0)->setCellValue('E' . $numrow, $jk);
+            $excel->setActiveSheetIndex(0)->setCellValue('F' . $numrow, $data->tempat_lahir);
+            $excel->setActiveSheetIndex(0)->setCellValue('G' . $numrow, $data->tgl_lahir);
+            $excel->setActiveSheetIndex(0)->setCellValue('H' . $numrow, $data->bln_lahir);
+            $excel->setActiveSheetIndex(0)->setCellValue('I' . $numrow, $data->thn_lahir);
+            $excel->setActiveSheetIndex(0)->setCellValue('J' . $numrow, $data->agama);
+            $excel->setActiveSheetIndex(0)->setCellValue('K' . $numrow, $alamat);
+            $excel->setActiveSheetIndex(0)->setCellValue('L' . $numrow, $data->sekolah_asal);
+            $excel->setActiveSheetIndex(0)->setCellValue('M' . $numrow, $data->tahun_lulus);
+            $excel->setActiveSheetIndex(0)->setCellValue('N' . $numrow, $data->nomor_hp);
+            $excel->setActiveSheetIndex(0)->setCellValue('O' . $numrow, $data->sum);
+            $excel->setActiveSheetIndex(0)->setCellValue('P' . $numrow, $non);
+            $excel->setActiveSheetIndex(0)->setCellValue('Q' . $numrow, $foto);
+            $excel->setActiveSheetIndex(0)->setCellValue('R' . $numrow, $kk);
+            $excel->setActiveSheetIndex(0)->setCellValue('S' . $numrow, $raport);
+            $excel->setActiveSheetIndex(0)->setCellValue('T' . $numrow, $prestasi);
+            $excel->setActiveSheetIndex(0)->setCellValue('U' . $numrow, $data->jurusan1);
+            $excel->setActiveSheetIndex(0)->setCellValue('V' . $numrow, $data->jurusan2);
 
 
-        $no++; // Tambah 1 setiap kali looping
-        $numrow++; // Tambah 1 setiap kali looping
+
+            // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
+            $excel->getActiveSheet()->getStyle('A' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('B' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('C' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('D' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('E' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('G' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('H' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('I' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('J' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('K' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('L' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('M' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('N' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('O' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('P' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('Q' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('R' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('S' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('T' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('U' . $numrow)->applyFromArray($style_row);
+            $excel->getActiveSheet()->getStyle('V' . $numrow)->applyFromArray($style_row);
+
+
+            $no++; // Tambah 1 setiap kali looping
+            $numrow++; // Tambah 1 setiap kali looping
         }
         // Set width kolom
         $excel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
@@ -1247,7 +1241,7 @@ class Admin extends CI_Controller {
         $excel->getActiveSheet()->getColumnDimension('U')->setWidth(15);
         $excel->getActiveSheet()->getColumnDimension('V')->setWidth(15);
 
-        
+
         // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
         $excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
         // Set orientasi kertas jadi LANDSCAPE
@@ -1263,11 +1257,12 @@ class Admin extends CI_Controller {
         $write->save('php://output');
     }
 
-    function accountSetting() {
+    function accountSetting()
+    {
         must_admin();
         $data['sekolah'] = $this->db->get('tbl_sekolah')->row_array();
         $data['user'] = $this->db->get_where('tbl_pengguna', ['xid' => $this->session->userdata('id')])->row();
-        
+
         $this->load->view('back/meta', $data);
         $this->load->view('back/header');
         $this->load->view('back/sidebar');
@@ -1276,14 +1271,15 @@ class Admin extends CI_Controller {
         $this->load->view('back/script');
     }
 
-    function up() {
+    function up()
+    {
         must_admin();
 
-        if ($this->input->post('passBaru') !='') {
+        if ($this->input->post('passBaru') != '') {
             # jika dimasukkan password baru
             $query = $this->db->get_where('tbl_pengguna', ['xid' => $this->session->userdata('id')])->row_array();
             $passLama = $this->input->post('passLama');
-            
+
             if (password_verify($passLama, $query['xpass'])) {
                 # jika password lama sesuai...
                 $data = [
@@ -1297,22 +1293,19 @@ class Admin extends CI_Controller {
                 if ($update) {
                     $this->session->set_flashdata('tipe', 'success');
                     $this->session->set_flashdata('pesan', 'Data berhasil diubah');
-                    redirect('admin/accountSetting','refresh');
+                    redirect('admin/accountSetting', 'refresh');
                 } else {
                     $this->session->set_flashdata('tipe', 'danger');
                     $this->session->set_flashdata('pesan', 'Data gagal diubah');
-                    redirect('admin/accountSetting','refresh');
+                    redirect('admin/accountSetting', 'refresh');
                 }
-                
             } else {
                 # code...
                 $this->session->set_flashdata('tipe', 'danger');
                 $this->session->set_flashdata('pesan', 'Password lama salah');
-                redirect('admin/accountSetting','refresh');
+                redirect('admin/accountSetting', 'refresh');
             }
-            
-
-        } elseif ($this->input->post('passBaru') =='') {
+        } elseif ($this->input->post('passBaru') == '') {
             # jika tidak ada password baru
             $data = [
                 'nama' => $this->input->post('nama', true),
@@ -1324,16 +1317,14 @@ class Admin extends CI_Controller {
             if ($update) {
                 $this->session->set_flashdata('tipe', 'success');
                 $this->session->set_flashdata('pesan', 'Data berhasil diubah');
-                redirect('admin/accountSetting','refresh');
+                redirect('admin/accountSetting', 'refresh');
             } else {
                 $this->session->set_flashdata('tipe', 'danger');
                 $this->session->set_flashdata('pesan', 'Data gagal diubah');
-                redirect('admin/accountSetting','refresh');
+                redirect('admin/accountSetting', 'refresh');
             }
         }
     }
-
-
 }
 
 /* End of file Admin.php */

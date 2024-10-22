@@ -70,7 +70,7 @@
                         <div class="card-action">
                             <?php echo $this->pagination->create_links(); ;?>
                             <div style="bottom: 15px; right: 10px;  position: absolute">
-                                <a href="<?=base_url('admin/downDU');?>" class="btn btn-sm btn-success"> DoWnLoAd DaTa</a>
+                                <a href="<?=base_url('admin/downDU');?>" class="btn btn-sm btn-success"> Download Data</a>
                             </div>
                         </div>
                     </div>
