@@ -113,7 +113,7 @@ CREATE TABLE `tbl_registrasi` (
   `rt` varchar(3) NOT NULL,
   `rw` varchar(3) NOT NULL,
   `dusun` varchar(30) NOT NULL,
-  `desa` varchar(20) NOT NULL,
+  `kelurahan` varchar(20) NOT NULL,
   `kecamatan` varchar(20) NOT NULL,
   `kode_pos` varchar(5) NOT NULL,
   `transportasi` varchar(50) NOT NULL,
