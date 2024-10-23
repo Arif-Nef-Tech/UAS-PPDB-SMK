@@ -11,7 +11,7 @@
 </style>
 <!-- Content start -->
 <!-- home start -->
-<section class="bg-home bg-head" id="home">
+<section class="bg-home bg-hexa" id="home">
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <!-- Menetukan jumlah slidenya sekaligus lopping slider indikator -->

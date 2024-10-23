@@ -7,7 +7,7 @@ var offlinePage = [
   '/connection-error.html',
   '/offline.html',
   '/img/logo.png',
-  '/img/bg-head.jpg'
+  '/img/bg-hexa3.jpg'
 ];
 
 self.addEventListener("install", function(event) {

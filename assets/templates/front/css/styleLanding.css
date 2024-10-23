@@ -116,9 +116,9 @@ ol {
   background: linear-gradient(to right, #a737dd, #6f26db);
 }
 
-/* .bg-hexa {
+.bg-hexa {
   background-image: url(../img/bg-hexa3.jpg);
-} */
+}
 
 .bg-head {
   background-image: url(../img/bg-head.jpg);
