@@ -704,7 +704,6 @@ class Admin extends CI_Controller
     }
 
 
-
     function downValid()
     {
 
@@ -714,8 +713,8 @@ class Admin extends CI_Controller
         // Panggil class PHPExcel nya
         $excel = new PHPExcel();
         // Settingan awal fil excel
-        $excel->getProperties()->setCreator('Yuwandianto')
-            ->setLastModifiedBy('Yuwandianto')
+        $excel->getProperties()->setCreator('Dhammasavana')
+            ->setLastModifiedBy('Dhammasavana')
             ->setTitle("Data-pendaftar")
             ->setSubject("Zonasi")
             ->setDescription("Laporan Pendaftaran ")

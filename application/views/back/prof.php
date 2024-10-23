@@ -1,7 +1,7 @@
 <style>
     .kiri {
         text-align: left !important;
-        
+
     }
 </style>
 <div class="main-panel">
@@ -24,7 +24,7 @@
                         <div class="card-header">
                             <div class="card-title">Pengaturan Pengguna</div>
                         </div>
-                        <?= form_open('admin/up');?>
+                        <?= form_open('admin/up'); ?>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
@@ -33,7 +33,7 @@
                                             <label for="nama" class="kiri">Nama Pengguna</label>
                                         </div>
                                         <div class="col-md-8 p-0">
-                                            <input type="text" class="form-control input-full" name="nama" id="nama" placeholder="Masukkan nama pengguna" value="<?= $user->nama;?>" required>
+                                            <input type="text" class="form-control input-full" name="nama" id="nama" placeholder="Masukkan nama pengguna" value="<?= $user->nama; ?>" required>
                                         </div>
                                     </div>
 
@@ -42,7 +42,7 @@
                                             <label for="email" class="kiri">Email Pengguna</label>
                                         </div>
                                         <div class="col-md-8 p-0">
-                                            <input type="email" class="form-control input-full" name="email" id="email" placeholder="Masukkan email login" value="<?= $user->xemail;?>" required>
+                                            <input type="email" class="form-control input-full" name="email" id="email" placeholder="Masukkan email login" value="<?= $user->xemail; ?>" required>
                                         </div>
                                     </div>
 
@@ -71,7 +71,7 @@
                         <div class="card-action">
                             <button type="submit" class="btn btn-success ">Simpan Data</button>
                         </div>
-                        <?= form_close() ;?>
+                        <?= form_close(); ?>
                     </div>
                 </div>
             </div>
