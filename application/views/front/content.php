@@ -3,6 +3,7 @@
         transition: 0.5s !important;
         border-radius: 20px
     }
+
     .kotak:hover {
         border: 1px solid red;
         background-color: #F1f1f1;
@@ -10,19 +11,23 @@
 </style>
 <!-- Content start -->
 <!-- home start -->
-<section class="bg-home bg-hexa" id="home">
-
+<section class="bg-home bg-head" id="home">
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <!-- Menetukan jumlah slidenya sekaligus lopping slider indikator -->
             <?php for ($i = 0; $i < $jml_sld; $i++) : ?>
-                <li data-target="#carouselExampleControls" data-slide-to="<?= $i; ?>" class="<?php if ($i == '0') { echo 'active';} ?>"></li>
+                <li data-target="#carouselExampleControls" data-slide-to="<?= $i; ?>" class="<?php if ($i == '0') {
+                                                                                                    echo 'active';
+                                                                                                } ?>"></li>
             <?php endfor; ?>
         </ol>
         <div class="carousel-inner">
             <!-- Looping data dari database -->
-            <?php $no = 1; foreach ($new_sld as $sl) : ?>
-                <div class="carousel-item <?php if ($no++ == '1') { echo 'active';  } ?>">
+            <?php $no = 1;
+            foreach ($new_sld as $sl) : ?>
+                <div class="carousel-item <?php if ($no++ == '1') {
+                                                echo 'active';
+                                            } ?>">
                     <div class="home-center">
                         <div class="home-desc-center">
                             <div class="container-fluid">
@@ -76,7 +81,7 @@
                 </div>
                 <div class="col-md-4 kotak">
                     <div class="client-images">
-                        <a href="<?= base_url().'./assets/'.$sekolah['panduan']; ?>">
+                        <a href="<?= base_url() . './assets/' . $sekolah['panduan']; ?>">
                             <img src="<?= base_url('assets/templates/front/'); ?>img/ICO4.svg" alt="logo-img" class="mx-auto img-fluid d-block">
                         </a>
                     </div>
@@ -164,13 +169,13 @@
                 <p class="mt-1">
                     Pusat Informasi Penerimaan Peserta Didik Baru
                     <br />
-                    <?= $sekolah['nama_sekolah'] ;?>
+                    <?= $sekolah['nama_sekolah']; ?>
                     <br />
-                    <?= $sekolah['alamat'] ;?>
+                    <?= $sekolah['alamat']; ?>
                     <br />
-                    <i class="fa fa-phone" style="margin-right: 10px; width: 10px;"></i> tlp: <?= $sekolah['tlp_sekolah'] ;?>
+                    <i class="fa fa-phone" style="margin-right: 10px; width: 10px;"></i> tlp: <?= $sekolah['tlp_sekolah']; ?>
                     <br />
-                    <i class="fa fa-envelope" style="margin-right: 10px; width: 10px;"></i> Email: <a href="mailto:<?=$sekolah['email_sekolah'];?>"><?= $sekolah['email_sekolah'] ;?></a>
+                    <i class="fa fa-envelope" style="margin-right: 10px; width: 10px;"></i> Email: <a href="mailto:<?= $sekolah['email_sekolah']; ?>"><?= $sekolah['email_sekolah']; ?></a>
                 </p>
             </div>
             <div class="col-md-3">
